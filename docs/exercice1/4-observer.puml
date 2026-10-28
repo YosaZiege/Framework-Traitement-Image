@@ -1,0 +1,40 @@
+@startuml
+' Exercice 1.4 - Pattern Observer
+' Le Joueur (score) notifie les objets de l'environnement (Couloir, Caméra,
+' Gardien) a chaque changement, avec un couplage faible.
+
+interface Observable {
+  + subscribe(Observer) : void
+  + unsubscribe(Observer) : void
+  + notifyObservers() : void
+}
+
+class Joueur {
+  - score : int
+  + getScore() : int
+  + setScore(int) : void
+}
+
+interface Observer {
+  + update(int) : void
+}
+
+class Couloir {
+  + update(int) : void
+}
+
+class Camera {
+  + update(int) : void
+}
+
+class Gardien {
+  + update(int) : void
+}
+
+Observable <|.. Joueur
+Observer <|.. Couloir
+Observer <|.. Camera
+Observer <|.. Gardien
+Joueur o-- "0..*" Observer : observateurs
+
+@enduml
