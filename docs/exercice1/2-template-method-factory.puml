@@ -1,0 +1,35 @@
+@startuml
+' Exercice 1.2 - Pattern Template Method + Factory Method
+' Squelette d'algorithme (partie1/partie2 variables) + instanciation sans
+' connaitre la classe concrete.
+
+abstract class Plugin {
+  + operation() : void       << méthode squelette >>
+  # partie1() : void         << abstract >>
+  # partie2() : void         << abstract >>
+}
+
+class PluginImplA {
+  # partie1() : void
+  # partie2() : void
+}
+
+class PluginImplB {
+  # partie1() : void
+  # partie2() : void
+}
+
+abstract class PluginFactory {
+  + createPlugin() : Plugin  << factory method >>
+}
+
+class PluginFactoryImpl {
+  + createPlugin() : Plugin
+}
+
+Plugin <|-- PluginImplA
+Plugin <|-- PluginImplB
+PluginFactory <|-- PluginFactoryImpl
+PluginFactoryImpl ..> Plugin : crée
+
+@enduml
