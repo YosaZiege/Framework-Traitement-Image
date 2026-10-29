@@ -1,0 +1,59 @@
+@startuml
+' Exercice 2 - Framework de traitement d'image
+' Patterns : Strategy (filtrage) + Adapter (ImplNonStandard) + Template Method (compression)
+
+interface FilterStrategy {
+  + filter(int[] data) : int[]
+}
+
+class FiltreInversion {
+  + filter(int[] data) : int[]
+}
+
+class FiltreSeuil {
+  - seuil : int
+  + filter(int[] data) : int[]
+}
+
+class NonStandardAdapter {
+  - implNonStandard : ImplNonStandard
+  - filterName : String
+  + filter(int[] data) : int[]
+}
+
+class ImplNonStandard {
+  + appliquerFiltre(String filterName, int[] data) : int[]
+}
+
+abstract class Compressor {
+  + compresser(int[] data) : int[]       << final >>
+  # compresserDetail(int[] data) : int[] << abstract >>
+}
+
+class CompressionRle {
+  # compresserDetail(int[] data) : int[]
+}
+
+class CompressionSimple {
+  # compresserDetail(int[] data) : int[]
+}
+
+class TraitementImage {
+  - filterStrategy : FilterStrategy
+  - compressor : Compressor
+  + setFilterStrategy(FilterStrategy) : void
+  + setCompressor(Compressor) : void
+  + filter(int[] data) : int[]
+  + compresser(int[] data) : int[]
+}
+
+FilterStrategy <|.. FiltreInversion
+FilterStrategy <|.. FiltreSeuil
+FilterStrategy <|.. NonStandardAdapter
+NonStandardAdapter o-- ImplNonStandard : adapte
+Compressor <|-- CompressionRle
+Compressor <|-- CompressionSimple
+TraitementImage o-- FilterStrategy : utilise
+TraitementImage o-- Compressor : utilise
+
+@enduml
