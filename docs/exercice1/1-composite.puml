@@ -1,0 +1,29 @@
+@startuml
+' Exercice 1.1 - Pattern Composite
+' Une figure peut être un cercle, un rectangle ou un groupe de figures.
+
+abstract class Figure {
+  + aire() : double
+}
+
+class Cercle {
+  + aire() : double
+}
+
+class Rectangle {
+  + aire() : double
+}
+
+class Groupe {
+  - figures : List<Figure>
+  + ajouter(Figure) : void
+  + supprimer(Figure) : void
+  + aire() : double
+}
+
+Figure <|-- Cercle
+Figure <|-- Rectangle
+Figure <|-- Groupe
+Groupe o-- "0..*" Figure : contient
+
+@enduml
